@@ -69,7 +69,14 @@ func DownloadImage(h *colly.HTMLElement) {
 		return
 	}
 
-	err := Download(path)
+	// check if allready have
+	_, err := os.Stat(filepath.Join(OutDir, path))
+	if err == nil {
+		log.Printf("Redundant download: %s", path)
+		return
+	}
+
+	err = Download(path)
 	if err != nil {
 		log.Printf("Failed to download: %s", err)
 		return
@@ -84,7 +91,6 @@ func EnsureDir(path string) error {
 		rebuildPath = filepath.Join(rebuildPath, paths[i])
 
 		err := os.Mkdir(rebuildPath, 0750)
-		log.Printf("mkdir %s", rebuildPath)
 
 		if err != nil && !os.IsExist(err) {
 			return err

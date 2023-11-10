@@ -1,6 +1,6 @@
 module github.com/rileys-trash-can/animu.dl
 
-go 1.21.3
+go 1.22
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
